@@ -102,6 +102,10 @@ PRODUCT_PACKAGES += \
 PRODUCT_PACKAGES += \
     IFAAService
 
+# Soter service (prebuilt, product partition)
+PRODUCT_PACKAGES += \
+    SoterService
+
 # Light
 PRODUCT_PACKAGES += \
     android.hardware.light-service.lineage

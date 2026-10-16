@@ -74,6 +74,21 @@ DEVICE_FRAMEWORK_COMPATIBILITY_MATRIX_FILE += \
     hardware/mediatek/vintf/mediatek_framework_compatibility_matrix.xml \
     hardware/xiaomi/vintf/xiaomi_framework_compatibility_matrix.xml
 
+# The generated vendor blob tree (vendor/xiaomi/rothko/rothko-vendor.mk) installs
+# VINTF metadata (vendor/etc/vintf/manifest/*, odm/etc/vintf/manifest/*) through
+# PRODUCT_COPY_FILES. AOSP's build rejects that by default (build/make/core/
+# Makefile: check-product-copy-files); allow it so the stock vendor layout is
+# kept verbatim. Cleaner long-term: migrate those entries to DEVICE_MANIFEST_FILE
+# / ODM_MANIFEST_FILES and let assemble_vintf validate+merge them.
+BUILD_BROKEN_VINTF_PRODUCT_COPY_FILES := true
+
+# Prebuilt ELF blobs (vendor/odm .so + hw binaries) are shipped through
+# PRODUCT_COPY_FILES by the vendor makefile. AOSP's build rejects that
+# (build/make/core/Makefile: check-elf-prebuilt-product-copy-files); allow it
+# so the stock vendor layout is kept verbatim. Cleaner long-term: migrate those
+# entries to cc_prebuilt_library_shared / cc_prebuilt_binary modules.
+BUILD_BROKEN_ELF_PREBUILT_PRODUCT_COPY_FILES := true
+
 # Kernel
 KERNEL_PREBUILTS_DIR := $(DEVICE_PATH)-kernel
 
